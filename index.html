@@ -72,7 +72,6 @@
       background-color: #000;
       border-radius: 10px;
       transition: opacity 0.5s ease;
-      object-fit: fill;
     }
 
     /* Plyr Custom Controls (optional) */
@@ -155,7 +154,7 @@
       loader.style.display = 'none';
 
       loadVideoBtn.addEventListener('click', () => {
-        const corsProxy = "https://cors.pijushandco0.workers.dev/"; // cors anywhere
+        const corsProxy = "https://cors-anywhere.ammoapps.com/"; // cors anywhere
         sourceUrl = corsProxy + videoUrlInput.value.trim();
 
         sourceUrl = videoUrlInput.value.trim();
