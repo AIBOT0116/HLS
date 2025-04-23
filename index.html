@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- test -->
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -168,10 +169,18 @@
 
           // Initialize HLS.js to load the stream
           if (Hls.isSupported()) {
-            const hls = new Hls();
+            const hls = new Hls({
+              liveSyncDurationCount: 3,     // maintain 3 segments behind live
+              liveMaxLatencyDurationCount: 10, // if user drifts behind, jump forward
+            });
 
             // Load the source URL using HLS.js
             hls.loadSource(sourceUrl);
+
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+              hls.startLoad(-1);  // -1 means start at live edge
+            });
 
             hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
               const availableQualities = hls.levels.map(level => level.height);
